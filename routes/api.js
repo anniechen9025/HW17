@@ -1,22 +1,11 @@
 const router = require("express").Router();
 const Workouts = require("../models/workouts.js");
 
-// TODO: Page render routes(how to set the links to different HTML)
-//! CONTINUE WORKOUT??('/exercise?')
-router.get("/exercise",(req,res)=>{
-    res.render('exercise')
-});
-
-router.get("/stats",(req,res)=>{
-    res.render('stats')
-});
-
 
 //* Function apis
 // TODO: how to find the most recently
 router.get("/api/workouts", (req, res) => {
     Workouts.find({})
-        // .sort({ day: -1 })
         .then((dbWorkouts) => {
             res.json(dbWorkouts);
         })
@@ -25,8 +14,11 @@ router.get("/api/workouts", (req, res) => {
         });
 });
 
-router.put("/api/workouts/:id", ({ body }, res) => {
-    Workouts.create(body)
+router.put("/api/workouts/:id", ({ body, params }, res) => {
+    Workouts.findByIdAndUpdate(params.id,
+        { $push: { exercises: body } },
+        { new: true, runValidators: true }
+    )
         .then((dbWorkouts) => {
             res.json(dbWorkouts);
         })
@@ -36,7 +28,7 @@ router.put("/api/workouts/:id", ({ body }, res) => {
 });
 
 router.post("/api/workouts", ({ body }, res) => {
-    Workouts.insertMany(body)
+    Workouts.create({})
         .then((dbWorkouts) => {
             res.json(dbWorkouts);
         })
@@ -46,8 +38,8 @@ router.post("/api/workouts", ({ body }, res) => {
 });
 
 router.get("/api/workouts/range", (req, res) => {
-    Transaction.find({})
-        .sort({ date: -1 })
+    Workouts.find({})
+        .limit(7)
         .then((dbTransaction) => {
             res.json(dbTransaction);
         })
@@ -56,5 +48,25 @@ router.get("/api/workouts/range", (req, res) => {
         });
 });
 
+//* aggregate way of added up object (another way show in the model js)
+//* CHART SOURCE: D3.JS
+// router.get("/api/happy", (req, res) => {
+//     Workouts.aggregate(
+//         [
+//             {
+//                 $addFields: {
+//                     totalDuration:{
+//                         $sum:'$exercises.duration'
+//                     }
+//                 }
+//             }
+//         ]
+//     ).then((dbWorkouts) => {
+//             res.json(dbWorkouts);
+//         })
+//         .catch((err) => {
+//             res.status(400).json(err);
+//         });
+// });
 
 module.exports = router;
