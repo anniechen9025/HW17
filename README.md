@@ -34,8 +34,8 @@ Run `npm install` in your terminal to install all dependencies. To run the appli
 - [Javascript](https://www.javascript.com/)
 - [Node.js](https://nodejs.org/en/)
 - [Express.js](https://expressjs.com/)
-- [Morgan](https://placeholder/)
-- [Mongoose](https://placeholder/)
+- [Morgan](https://www.npmjs.com/package/morgan)
+- [Mongoose](https://www.npmjs.com/package/mongoose)
 
 
 ## License
