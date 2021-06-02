@@ -23,10 +23,8 @@ Run `npm install` in your terminal to install all dependencies. To run the appli
 
 ## Example:
 ![Home Page](./Assets/1.png)
-![Signup-Login](./Assets/2.png)
+![Add-Exercise](./Assets/2.png)
 ![Dashboard](./Assets/3.png)
-![Edit Post](./Assets/4.png)
-![Comment](./Assets/5.png)
 
 ## Built With:
 - [HTML5](https://html.com/html5/)
